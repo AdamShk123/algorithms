@@ -7,17 +7,18 @@
         private static void Main(string[] args)
         {
             const double num = 4.0;
+            const double initial = 1.0;
             
-            var result = NewtonMethod(num, 1.0);
+            var result = NewtonMethod(num, initial);
             
             Console.ForegroundColor = ConsoleColor.Red;
 
             if (result.HasValue)
             {
-                Console.WriteLine("The square root of {0} according to the NewtonMethod function is approximately {1}.", num ,result.Value);   
+                Console.WriteLine("The square root of {0} according to the NewtonMethod function is approximately {1:G3}.", num ,result.Value);   
                 
                 var builtin = Math.Sqrt(num);
-                Console.WriteLine("The square root of {0} according to the Math.Sqrt function is approximately {1}.", num, builtin);
+                Console.WriteLine("The square root of {0} according to the Math.Sqrt function is approximately {1:G3}.", num, builtin);
 
                 var diff = Math.Abs(result.Value - builtin);
                 Console.WriteLine("The difference between results is {0}", diff);
@@ -28,7 +29,7 @@
             }
         }
         
-        private static double? NewtonMethod(double num, double initial, double maxIterations=1e6, double within = 1e-10)
+        private static double? NewtonMethod(double num, double initial, int maxIterations=1000, double within = 1e-10)
         {
             switch (num)
             {
@@ -38,7 +39,7 @@
                     return 0.0;
             }
 
-            double counter = 0;
+            int counter = 0;
             var current = initial;
             var converge = double.MaxValue;
             
